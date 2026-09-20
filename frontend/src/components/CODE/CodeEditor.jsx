@@ -1,4 +1,4 @@
-export default function CodeEditor({ activeFile, codeContent = "", theme }) {
+export default function CodeEditor({ activeFile, codeContent = "" }) {
   return (
     <div className="flex-1 rounded border border-white/5 bg-black/40 p-4 overflow-hidden h-full flex flex-col relative">
       <div className="flex items-center justify-between pb-2 border-b border-white/5 mb-3 select-none">

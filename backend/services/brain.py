@@ -1,15 +1,16 @@
 import time
-from core import settings, log, manager
+
+import core.state as state
+from core import log, manager, settings
+from core.alerts import process_system_alert
 from core.hardware import scan_system_hardware
 from core.obsidian import get_vault_context
-import core.state as state
-from core.alerts import process_system_alert
-from services.intent import classify_intent, is_skill_enabled
 from services.chat import ask_local_ai, ask_local_ai_stream
+from services.intent import classify_intent, is_skill_enabled
 from services.memory import extract_fact_to_memory
 
 try:
-    from services.listen import listen, ear_pause, ear_resume
+    from services.listen import ear_pause, ear_resume, listen
     from services.speak import speak
 except ImportError as e:
     log.critical(f"❌ Erro ao importar sentidos: {e}")

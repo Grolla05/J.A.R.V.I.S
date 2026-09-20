@@ -12,7 +12,12 @@ const BOOT_SEQUENCE = [
 
 export default function StartupScreen({ onComplete }) {
   const [progress, setProgress] = useState(0);
-  const [currentLine, setCurrentLine] = useState(0);
+
+  // Derivado do progresso durante o render: nao precisa de state + efeito.
+  const currentLine = Math.min(
+    Math.floor((progress / 100) * BOOT_SEQUENCE.length),
+    BOOT_SEQUENCE.length - 1,
+  );
 
   useEffect(() => {
     const interval = setInterval(() => {
@@ -28,11 +33,6 @@ export default function StartupScreen({ onComplete }) {
     }, 100);
     return () => clearInterval(interval);
   }, [onComplete]);
-
-  useEffect(() => {
-    const lineIndex = Math.floor((progress / 100) * BOOT_SEQUENCE.length);
-    setCurrentLine(Math.min(lineIndex, BOOT_SEQUENCE.length - 1));
-  }, [progress]);
 
   return (
     <motion.div

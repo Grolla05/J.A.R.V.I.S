@@ -1,7 +1,7 @@
 import core.state as state
+from core.database import db
 from core.llm import query_ollama, query_ollama_stream
 from core.logger import log
-from core.database import db
 from core.prompts import load_prompt
 
 SYSTEM_PROMPT = {

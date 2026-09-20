@@ -1,10 +1,11 @@
-import webview
 import json
-import time
 import threading
+import time
+
 from .config import settings
 from .logger import log
 from .utils import escape_js
+
 
 class JarvisAPI:
     """
@@ -165,7 +166,7 @@ class JarvisAPI:
         com seus respectivos estados ativos/inativos de 1 para 1 e em grupo.
         """
         try:
-            from core import manager, db
+            from core import db, manager
             disabled_skills = db.get_config("disabled_skills") or []
             disabled_categories = db.get_config("disabled_categories") or []
             
@@ -260,8 +261,8 @@ class JarvisAPI:
         import threading
         def _process():
             try:
-                from services.brain import execute_command_stream
                 from core import db
+                from services.brain import execute_command_stream
                 
                 log.info(f"💬 [CHAT STREAM] Mensagem recebida de Felipe na sessão '{session_id}': '{text}'")
                 
