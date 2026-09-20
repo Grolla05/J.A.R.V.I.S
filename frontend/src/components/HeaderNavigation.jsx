@@ -1,4 +1,3 @@
-/* eslint-disable no-unused-vars */
 import { motion } from "framer-motion";
 import { TalkIcon, ChatIcon, CodeIcon } from "./CORE/NavIcons";
 
@@ -47,7 +46,6 @@ const CRITICAL_ACCENT = {
 export default function HeaderNavigation({
   activeMode,
   setActiveMode,
-  jarvisState,
   isCritical,
 }) {
   const tabs = [

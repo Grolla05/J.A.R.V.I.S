@@ -1,6 +1,5 @@
-/* eslint-disable */
 import { useState, useEffect, useCallback, useRef } from "react";
-import { getFileStyle } from "./CHAT/FileChip";
+import { getFileStyle } from "./CHAT/fileStyle";
 import ChatSidebar from "./CHAT/ChatSidebar";
 import MessageList from "./CHAT/MessageList";
 import ChatInput from "./CHAT/ChatInput";
@@ -34,7 +33,7 @@ export default function ChatPanel({
         .replace(/\+/g, '-')
         .replace(/\//g, '_')
         .replace(/=+$/, '');
-    } catch (err) {
+    } catch {
       // Fallback seguro em caso de ausência temporária do crypto no ambiente de desenvolvimento
       return "fallback_session_" + Date.now() + "_" + Math.random().toString(36).substr(2, 9);
     }

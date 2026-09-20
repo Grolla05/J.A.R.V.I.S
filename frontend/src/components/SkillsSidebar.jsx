@@ -1,4 +1,3 @@
-/* eslint-disable */
 import { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import {
@@ -69,7 +68,7 @@ export default function SkillsSidebar({ isCritical }) {
     return () => {
       window.removeEventListener("pywebviewready", fetchSkills);
     };
-  }, [isOpen]);
+  }, [isOpen, callApi]);
 
   const toggleSidebar = () => setIsOpen(!isOpen);
 

@@ -25,8 +25,10 @@ export default defineConfig([
       },
     },
     rules: {
-      // Sem esta regra o core do ESLint nao enxerga <motion.div />,
-      // e marca o import `motion` como nao utilizado (falso positivo).
+      // O `no-unused-vars` do core do ESLint não analisa JSX: o nome de
+      // `<motion.div />` é um JSXMemberExpression e nunca conta como leitura de
+      // `motion`, então o import aparecia como morto. Componentes com inicial
+      // maiúscula escapavam pelo `varsIgnorePattern`; `motion` (minúsculo) não.
       'react/jsx-uses-vars': 'error',
       'no-unused-vars': ['error', { varsIgnorePattern: '^[A-Z_]' }],
     },

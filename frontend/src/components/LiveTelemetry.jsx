@@ -1,4 +1,3 @@
-/* eslint-disable */
 import { useEffect, useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import TelemetryWidget from "./TELEMETRY/TelemetryWidget";
@@ -36,7 +35,7 @@ export default function LiveTelemetry() {
       delete window.receiveTelemetry;
       if (mockInterval) clearInterval(mockInterval);
     };
-  }, [isReady]);
+  }, [isReady, callApi]);
 
   if (!data) return null;
 

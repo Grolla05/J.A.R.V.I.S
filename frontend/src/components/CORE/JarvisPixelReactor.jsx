@@ -1,4 +1,3 @@
-/* eslint-disable */
 import { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 
@@ -35,14 +34,20 @@ const ReactorSvg = ({
   </motion.svg>
 );
 
+const createParticles = () =>
+  Array.from({ length: 40 }).map((_, i) => ({
+    id: i,
+    xDest: (Math.random() - 0.5) * 80,
+    yDest: 65 + Math.random() * 85,
+    size: 1.5 + Math.random() * 2.5,
+    delay: Math.random() * 0.25,
+  }));
+
 const ParticleField = () => {
-  const particles = Array.from({ length: 40 }).map((_, i) => {
-    const xDest = (Math.random() - 0.5) * 80;
-    const yDest = 65 + Math.random() * 85;
-    const delay = Math.random() * 0.25;
-    const size = 1.5 + Math.random() * 2.5;
-    return { id: i, xDest, yDest, size, delay };
-  });
+  // Sorteio único por montagem, via inicializador lazy do useState: manter o
+  // Math.random() direto no corpo do componente re-sorteava a dispersão a cada
+  // render e quebrava a pureza exigida pelo React.
+  const [particles] = useState(createParticles);
 
   return (
     <svg
@@ -222,7 +227,7 @@ export default function JarvisPixelReactor({ state, isCritical }) {
               className="w-[660px] h-[95px]"
               style={{ filter: "drop-shadow(0 0 28px rgba(10, 132, 255, 0.5))" }}
             >
-              {asciiPixels.map((p, idx) => {
+              {asciiPixels.map((p) => {
                 const CHAR_ORDER = [">", "J", "A", "R", "V", "I", "S", "C", "O", "D", "E"];
                 const charIdx = CHAR_ORDER.indexOf(p.char);
                 const isDeleting = phase === "deleting";
