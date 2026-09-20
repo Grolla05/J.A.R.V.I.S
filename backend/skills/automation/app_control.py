@@ -1,9 +1,11 @@
-import os
 import difflib
-import subprocess
 import json
+import os
+import subprocess
+
 import psutil
 import requests  # Conexão direta
+
 from core import log
 from core.config import settings
 from core.prompts import load_prompt

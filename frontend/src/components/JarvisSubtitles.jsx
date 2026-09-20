@@ -1,4 +1,4 @@
-/* eslint-disable no-unused-vars */
+ 
 import { motion, AnimatePresence } from "framer-motion";
 
 export default function JarvisSubtitles({ jarvisState, isCritical, text }) {
