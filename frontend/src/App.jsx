@@ -1,5 +1,4 @@
-/* eslint-disable */
-import { useState, useEffect, useRef } from "react";
+import { useState, useEffect, useRef, useCallback } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import LiquidAuraReactor from "./components/LiquidAuraReactor";
 import StartupScreen from "./components/StartupScreen";
@@ -16,7 +15,6 @@ import useBridgeAPI from "./hooks/BridgeAPI";
 export default function App() {
   // phase: 'loading' | 'mode-select' | 'active'
   const [phase, setPhase] = useState("loading");
-  const [isLoading, setIsLoading] = useState(true);
   const [jarvisState, setJarvisState] = useState("idle");
   const [isCritical, setIsCritical] = useState(false);
   const [activeMode, setActiveMode] = useState("talk"); // talk, chat, code
@@ -24,23 +22,11 @@ export default function App() {
   const [chatMessages, setChatMessages] = useState([]);
   const [currentSessionId, setCurrentSessionId] = useState(null);
   const [isCentering, setIsCentering] = useState(false);
-  const isModeInitialized = useRef(false);
+  const centeringTimerRef = useRef(null);
   const { isReady, callApi } = useBridgeAPI();
 
-  useEffect(() => {
-    // Primeira vez que isLoading vira false = seleção inicial de modo
-    // on_initial_mode_selected já tratou mic + greeting — não repetir aqui
-    if (!isLoading) {
-      if (!isModeInitialized.current) {
-        isModeInitialized.current = true;
-        return;
-      }
-      setIsCentering(true);
-      const timer = setTimeout(() => setIsCentering(false), 700);
-      callApi("set_active_mode", activeMode);
-      return () => clearTimeout(timer);
-    }
-  }, [activeMode, isLoading]);
+  // Descarta o timer de recentralização se o App desmontar no meio do pulso
+  useEffect(() => () => clearTimeout(centeringTimerRef.current), []);
 
   useEffect(() => {
     // OUVINTE DE ESTADO (Voz/Processamento)
@@ -66,24 +52,41 @@ export default function App() {
       setIsCritical(isActive);
     };
 
-    if (isReady) {
-      console.log("Bridge detectada. Sistemas prontos.");
-    }
-
     return () => {
       delete window.receiveStatus;
       delete window.updateHudState;
     };
   }, []);
 
+  useEffect(() => {
+    if (isReady) {
+      console.log("Bridge detectada. Sistemas prontos.");
+    }
+  }, [isReady]);
+
   const handleBootComplete = () => {
     setPhase("mode-select");
   };
 
+  // Troca de modo pela navegação superior. O pulso de recentralização nasce
+  // aqui, no handler, em vez de um efeito reagindo a activeMode — evita o
+  // setState síncrono dentro do efeito (cascading render).
+  const handleModeChange = useCallback(
+    (modeId) => {
+      setActiveMode(modeId);
+      setIsCentering(true);
+      clearTimeout(centeringTimerRef.current);
+      centeringTimerRef.current = setTimeout(() => setIsCentering(false), 700);
+      callApi("set_active_mode", modeId);
+    },
+    [callApi],
+  );
+
   const handleModeSelect = (modeId) => {
+    // on_initial_mode_selected já trata mic + greeting, e a seleção inicial
+    // não dispara o pulso de recentralização
     setActiveMode(modeId);
     setPhase("active");
-    setIsLoading(false);
     callApi("on_initial_mode_selected", modeId);
   };
 
@@ -106,8 +109,7 @@ export default function App() {
           {/* Navegação Superior de Modos (Talk, Chat, Code) */}
           <HeaderNavigation
             activeMode={activeMode}
-            setActiveMode={setActiveMode}
-            jarvisState={jarvisState}
+            setActiveMode={handleModeChange}
             isCritical={isCritical}
           />
 

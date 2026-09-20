@@ -1,4 +1,3 @@
-/* eslint-disable */
 import { useRef } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { Paperclip, SendHorizontal } from "lucide-react";

@@ -1,4 +1,3 @@
-/* eslint-disable no-unused-vars */
 import { motion } from "framer-motion";
 import { useState, useEffect } from "react";
 import ClaudeBadge from "./CODE/ClaudeBadge";
@@ -170,7 +169,6 @@ class ObsidianVault:
         <CodeEditor
           activeFile={activeFile}
           codeContent={fileContents[activeFile]}
-          theme={theme}
         />
       </div>
     </motion.div>

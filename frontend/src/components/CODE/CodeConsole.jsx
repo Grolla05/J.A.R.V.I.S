@@ -1,4 +1,3 @@
-/* eslint-disable */
 import { useState, useRef, useEffect } from "react";
 import { motion } from "framer-motion";
 
@@ -25,13 +24,14 @@ export default function CodeConsole({ jarvisState, isCritical }) {
 
   const runSkill = (skill) => {
     setActiveSkill(skill.id);
-    
-    // Adiciona log de execução
-    const newLogs = [
-      ...logs,
-      { id: Date.now(), text: `$ execute_routine ${skill.cmd}`, type: "command" }
-    ];
-    setLogs(newLogs);
+
+    // Adiciona log de execução. O id sai do tamanho da lista dentro do updater:
+    // a lista só cresce, então prev.length + 1 é sempre um id novo — e não
+    // depende de Date.now(), que é impuro e colide em cliques no mesmo ms.
+    setLogs((prev) => [
+      ...prev,
+      { id: prev.length + 1, text: `$ execute_routine ${skill.cmd}`, type: "command" }
+    ]);
 
     setTimeout(() => {
       let result = "";
@@ -49,7 +49,7 @@ export default function CodeConsole({ jarvisState, isCritical }) {
 
       setLogs((prev) => [
         ...prev,
-        { id: Date.now() + 1, text: result, type: type }
+        { id: prev.length + 1, text: result, type: type }
       ]);
       setActiveSkill(null);
     }, 800);
