@@ -1,10 +1,10 @@
-import json
-import requests
 import ctypes
-import subprocess
 import datetime
-import math
-from ctypes import wintypes
+import json
+import subprocess
+
+import requests
+
 from core import log
 from core.config import settings
 from core.prompts import load_prompt

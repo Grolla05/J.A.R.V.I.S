@@ -1,9 +1,11 @@
-import sqlite3
 import json
+import sqlite3
 from contextlib import contextmanager
-from typing import Any, Optional, Dict
-from .logger import log
+from typing import Any, Optional
+
 from .config import settings
+from .logger import log
+
 
 class DatabaseManager:
     """Gerencia a persistência de dados do JARVIS (Memória de Longo Prazo e Identidade)."""

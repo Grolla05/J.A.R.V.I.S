@@ -13,8 +13,7 @@ const BOOT_SEQUENCE = [
 export default function StartupScreen({ onComplete }) {
   const [progress, setProgress] = useState(0);
 
-  // Derivado do progresso no próprio render — não precisa de state nem de um
-  // efeito sincronizando os dois (o que causaria render em cascata).
+  // Derivado do progresso durante o render: nao precisa de state + efeito.
   const currentLine = Math.min(
     Math.floor((progress / 100) * BOOT_SEQUENCE.length),
     BOOT_SEQUENCE.length - 1,
