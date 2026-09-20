@@ -1,0 +1,80 @@
+# ============================================================================
+# REQUISITOS DO J.A.R.V.I.S (Just A Rather Very Intelligent System)
+# ============================================================================
+# Para instalar todas as dependências, execute:
+# cd backend
+# pip install -r requirements.txt (instala as dependências)
+# python -m services.brain (rodar o arquivo brain.py)
+# ============================================================================
+
+# --- CORE / INTELIGÊNCIA ARTIFICIAL ---
+ollama                      # Cliente Python para comunicação com servidor Ollama (LLM)
+
+# --- CONFIGURAÇÃO E AMBIENTE ---
+python-dotenv               # Gerenciamento de variáveis de ambiente (.env)
+
+# --- RECONHECIMENTO DE VOZ (Speech to Text) ---
+SpeechRecognition           # Biblioteca para reconhecimento de voz via Google Speech API
+PyAudio                     # Interface para captura de áudio do microfone
+
+# --- TEXT-TO-SPEECH (Síntese de Voz) ---
+edge-tts                    # Voz neural da Microsoft Edge (online, alta qualidade)
+pyttsx3                     # Motor de TTS offline (backup)
+pygame-ce                   # Reprodução de arquivos de áudio MP3 (usando a Community Edition para suporte ao Python 3.14+)
+
+# --- CONTROLE DE SISTEMA & AUTOMAÇÃO ---
+pyautogui                   # Controle programático de Teclado e Mouse (Atalhos, Clicks)
+comtypes                    # Biblioteca COM para interação com APIs do Windows
+pycaw                       # Python Core Audio Windows - Controle de volume, dispositivos de áudio
+
+# --- INTERFACE GRÁFICA ---
+pywebview                   # Criação de interface web/desktop híbrida
+
+# --- MONITORAMENTO DE SISTEMA ---
+psutil                      # Informações de CPU, RAM, Disco, Rede, Processos
+GPUtil                      # Monitoramento de GPUs NVIDIA (temperatura, carga, memória)
+
+# --- REQUISIÇÕES HTTP ---
+requests                    # Cliente HTTP para APIs externas e comunicação
+
+# --- MODEL CONTEXT PROTOCOL ---
+mcp                         # SDK oficial MCP (cliente para Obsidian MCP server)
+
+# --- TERMINAL / SAÍDA COLORIDA ---
+colorama                    # Cores no terminal (usado no speak.py para typewriter effect)
+
+# --- BIBLIOTECAS PADRÃO DO PYTHON (Não requerem instalação) ---
+# sqlite3                   # Banco de dados (embutido no Python)
+# json                      # Manipulação de JSON (embutido)
+# threading                 # Multithreading (embutido)
+# asyncio                   # Programação assíncrona (embutido)
+# re                        # Expressões regulares (embutido)
+# subprocess                # Execução de comandos do sistema (embutido)
+# platform                  # Informações de plataforma (embutido)
+# time, datetime            # Manipulação de tempo (embutido)
+# os, shutil, glob          # Operações de sistema de arquivos (embutido)
+# sys                       # Acesso a variáveis do sistema (embutido)
+# difflib                   # Comparação de strings (embutido)
+# uuid                      # Geração de IDs únicos (embutido)
+# ctypes                    # Interação com bibliotecas C (embutido)
+# typing                    # Type hints (embutido)
+# logging                   # Sistema de logs (embutido - usado pelo core/logger.py)
+
+# ============================================================================
+# NOTAS DE INSTALAÇÃO:
+# ============================================================================
+# 
+# 1. PyAudio no Windows:
+#    Se tiver problemas para instalar PyAudio, use:
+#    pip install pipwin
+#    pipwin install pyaudio
+#
+# 2. PyAutoGUI:
+#    Se o mouse for para o canto da tela, ele ativa o fail-safe e para o script.
+#
+# 3. Ollama:
+#    Você precisa ter o servidor Ollama rodando (local ou remoto).
+#    Baixe em: https://ollama.ai
+#    Configure o IP e modelo no arquivo .env
+#
+# ============================================================================
